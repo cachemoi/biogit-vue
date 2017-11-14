@@ -1,4 +1,4 @@
-# biogit-vue
+# Biogit
 
 > Biogit, the modern framework for scientific research
 
