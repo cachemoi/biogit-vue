@@ -1,7 +1,5 @@
 <template>
-  <div class="landing-page">
-    <h1>Scientific publishing for the internet age</h1>
-  </div>
+  <h1>User Page</h1>
 </template>
 
 <script>

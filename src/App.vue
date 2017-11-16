@@ -9,7 +9,9 @@
 import NavBar from '@/components/NavBar'
 
 export default {
-  components: {NavBar},
+  components: {
+    NavBar
+  },
   name: 'app'
 }
 </script>

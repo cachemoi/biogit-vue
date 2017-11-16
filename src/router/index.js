@@ -5,17 +5,20 @@ import UserView from '@/components/UserView'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'LandingPage',
+      Name: 'landing',
       component: LandingView
     },
     {
       path: '/user',
-      name: 'UserProfile',
+      name: 'user',
       component: UserView
     }
   ]
 })
+
+export default router

@@ -11,7 +11,9 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^4.0.0-beta.2",
+    "graphql-request": "^1.4.0",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.8",
     "vue": "^2.5.2",
