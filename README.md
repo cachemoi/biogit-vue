@@ -19,7 +19,8 @@ The data model can be visualised in the graphcool web GUI (and you can try out q
 We highly recommend getting familiar with those frameworks before contributing to this project,
 but here's a quick TL;DR:
 
-All data we use and their relationships is defined in the graphQL model file.
+All data we use and their relationships is defined in the graphQL model file. 
+You'll find this in `~/dataModel`
 We use VueX to query for data and manage the state of the app. 
 The VueX functions are in the `~/src/store` directory.
 We use those functions in Vue components to populate them with the relevant data.
