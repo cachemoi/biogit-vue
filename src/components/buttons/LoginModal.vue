@@ -62,11 +62,9 @@
         $('#login-modal').modal('toggle')
       },
       updateMail (e) {
-        console.log('mail updated')
         this.$store.commit('SET_EMAIL', e.target.value)
       },
       updatePass (e) {
-        console.log('pass updated')
         this.$store.commit('SET_PASSWORD', e.target.value)
       }
     }
