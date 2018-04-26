@@ -32,7 +32,7 @@ const actions = {
   },
   async createUser ({commit, state}) {
     try {
-      authAPI.signUpUser(state.userName, state.email, state.password)
+      authAPI.signUpUser(state.kuserName, state.email, state.password)
         .then(data => console.log(data))
     } catch (e) {
       return new Error(e.toString())

@@ -1,13 +1,12 @@
 <template>
-  <div id="app">
+  <div>
     <nav-bar></nav-bar>
     <router-view/>
   </div>
 </template>
 
 <script>
-import NavBar from './components/NavBar'
-
+import NavBar from './components/nav/NavBar'
 
 export default {
   components: {
@@ -18,11 +17,7 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body {
+  background-image: url("https://www.transparenttextures.com/patterns/gplay.png");
 }
 </style>

@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div  v-if="isLoggedin === false">
-      <div class="view p-4 m-5">
-        <h1>Scientific publishing for the internet age</h1>
-      </div>
-    </div>
-    <home-view v-else></home-view>
+    <no-user-view  v-if="isLoggedin === false"></no-user-view>
+    <home-view v-else/>
   </div>
 </template>
 
 <script>
   import {mapState} from 'vuex'
-  import HomeView from './HomeView.vue'
+  import HomeView from './HomeView'
+  import NoUserView from './NoUserView'
 
   export default {
-    components: {HomeView},
+    components: {
+      HomeView,
+      NoUserView
+    },
     name: 'landing-page',
     computed: {
       ...mapState({
@@ -24,6 +24,5 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>

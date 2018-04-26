@@ -36,7 +36,6 @@
 
   export default {
     name: 'system-view',
-    props: ['itemID'],
     computed: {
       ...mapState({
         item: state => state.items.currentItem
@@ -54,6 +53,5 @@
   }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
