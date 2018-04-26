@@ -1,42 +1,33 @@
 <template>
-
-  <div id="navbar-wrapper">
-    <nav class="navbar navbar-expand-md navbar-light bg-light">
-      <router-link to="/" class="navbar-brand">
-        <img src="../../assets/logo.svg" width="30" alt="logo">
-      </router-link>
-      <router-link to="/" class="navbar-brand">
+  <div class="navbar-bottom-line">
+    <b-navbar toggleable="md" type="light" variant="light">
+      <b-navbar-brand to="/">
+        <img src="../../assets/logo.svg" class="d-inline-block align-top" width="30" alt="logo">
         Biogit
-      </router-link>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div v-if="!loginStatus" class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-          <login-modal></login-modal>
-          <sign-up-modal></sign-up-modal>
-      </div>
-      <div v-if="loginStatus" class="collapse navbar-collapse">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <router-link to="/" class="nav-link">
-              <span class="sr-only">Home</span>
-            </router-link>
-          </li>
-        </ul>
-      </div>
-    </nav>
+      </b-navbar-brand>
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <b-collapse is-nav id="nav_collapse">
+        <b-nav-item v-if="loginStatus" to="/">
+          Home
+        </b-nav-item>
+        <b-navbar-nav class="ml-auto" v-if="!loginStatus">
+            <login-button></login-button>
+            <sign-up-button></sign-up-button>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
   </div>
 </template>
 
 <script>
-import LoginModal from '../buttons/LoginButton'
-import SignUpModal from '../buttons/SignUpButton'
+import LoginButton from '../buttons/LoginButton'
+import SignUpButton from '../buttons/SignUpButton'
 import {mapState} from 'vuex'
 
 export default {
   components: {
-    LoginModal,
-    SignUpModal
+    LoginButton,
+    SignUpButton
   },
   computed: {
     ...mapState({
@@ -47,9 +38,8 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  #navbar-wrapper{
+  .navbar-bottom-line{
     border-bottom: solid #1DA1F2;
     border-bottom-width: 3px;
   }
