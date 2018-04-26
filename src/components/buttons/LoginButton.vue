@@ -15,19 +15,14 @@
         </div>
         <button @click.prevent="login" class="btn btn-primary">Submit</button>
       </form>
-      <red-alert></red-alert>
     </b-modal>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
-  import RedAlert from '../RedAlert.vue'
 
   export default {
-    components: {
-      RedAlert
-    },
     computed: {
       ...mapState({
         email: state => state.auth.email,

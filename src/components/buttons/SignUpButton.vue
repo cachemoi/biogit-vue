@@ -21,19 +21,14 @@
         <button @click="signUp" class="btn btn-primary" data-dismiss="modal">Submit</button>
       </form>
     </b-modal>
-    <red-alert></red-alert>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
-  import RedAlert from '../RedAlert.vue'
 
   export default {
     name: 'SignUpModal',
-    components: {
-      RedAlert
-    },
     computed: {
       ...mapState({
         userName: state => state.auth.userName,

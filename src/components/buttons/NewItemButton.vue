@@ -6,12 +6,12 @@
     <b-modal id="NewItemModal" title="New Item" :hide-footer="true">
       <form>
         <div class="form-group">
-          <input v-model="newItemName" type="text" placeholder="Enter item name" class="form-control"/>
+          <input type="text" placeholder="Enter item name" class="form-control"/>
         </div>
         <div class="form-group">
           <div class="btn-group" data-toggle="buttons">
             <label class="dropdown">
-              <select v-model="newItemClass" class="custom-select">
+              <select class="custom-select">
                 <option disabled value="">Please select your item type</option>
                 <option value="system">System</option>
                 <option value="protocol">Protocol</option>
@@ -25,7 +25,6 @@
         </button>
       </form>
     </b-modal>
-    <red-alert></red-alert>
   </div>
 </template>
 
@@ -33,14 +32,14 @@
   import {mapState} from 'vuex'
 
   export default {
-    name: 'new-item-button',
+    name: 'NewItemButton',
     computed: {
       ...mapState({
         userID: state => state.auth.user.userID
       })
     },
     methods: {
-      async newItem () {
+      newItem () {
         console.log(this.newItemName)
       }
     }

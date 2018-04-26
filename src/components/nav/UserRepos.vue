@@ -1,8 +1,8 @@
 <template>
-  <div id="repo-nav-wrapper">
-    <h5 class="card-header">
+  <div class="card text-center" style="width: 12rem;">
+    <div class="card-header">
       Your Items
-    </h5>
+    </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item" v-if="items.length === 0">
         <p>You don't have any items yet, click to add some!</p>
@@ -26,9 +26,13 @@
 
 <script>
 import {mapState} from 'vuex'
+import NewItemButton from '../buttons/NewItemButton'
 
 export default {
   name: 'UserRepos',
+  components: {
+    NewItemButton
+  },
   computed: {
     ...mapState({
       items: state => state.items.items
