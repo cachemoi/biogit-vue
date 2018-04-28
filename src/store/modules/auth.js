@@ -4,10 +4,12 @@ import * as types from '../mutation-types'
 // intial state
 const state = {
   isLoggedin: false,
-  user: null,
-  email: null,
-  password: null,
-  userName: null
+  user: {
+    id: null,
+    email: null,
+    password: null,
+    name: null
+  }
 }
 
 // getters
@@ -17,11 +19,12 @@ const getters = {}
 const actions = {
   async auth ({commit, state}) {
     try {
-      authAPI.authUser(state.email, state.password)
+      await authAPI.authUser(state.user.email)
         .then(data => {
-          if (data.authenticateUser) {
-            const user = {...data.authenticateUser}
-            commit(types.AUTH_SUCCESS, {user})
+          console.log(data)
+          if (data.User) {
+            const user = {...data.User}
+            commit(types.AUTH_SUCCESS, {userName: user.name, userID: user.id})
           } else {
             console.log(new Error('Sorry, it looks like those were the wrong credentials!'))
           }
@@ -32,22 +35,15 @@ const actions = {
   },
   async createUser ({commit, state}) {
     try {
-      authAPI.signUpUser(state.kuserName, state.email, state.password)
-        .then(data => console.log(data))
-    } catch (e) {
-      return new Error(e.toString())
-    }
-  },
-  async login ({ dispatch }) {
-    try {
-      await dispatch('auth')
-    } catch (e) {
-      return new Error(e.toString())
-    }
-  },
-  async signUp ({dispatch}) {
-    try {
-      await dispatch('createUser')
+      authAPI.signUpUser(state.userName, state.email, state.password)
+        .then(data => {
+          if (data.User) {
+            const user = { ...data.User }
+            commit(types.AUTH_SUCCESS, { userName: user.name, userEmail: user.email })
+          } else {
+            console.log(new Error('Sorry, it looks like those were the wrong credentials!'))
+          }
+        })
     } catch (e) {
       return new Error(e.toString())
     }
@@ -56,21 +52,19 @@ const actions = {
 
 // mutations
 const mutations = {
-  [types.SET_EMAIL] (state, email) {
-    state.email = email
+  [types.SET_EMAIL] (state, {email}) {
+    state.user.email = email
   },
-  [types.SET_PASSWORD] (state, password) {
-    state.password = password
+  [types.SET_PASSWORD] (state, {password}) {
+    state.user.password = password
   },
-  [types.SET_USERNAME] (state, userName) {
-    state.userName = userName
+  [types.SET_USERNAME] (state, {userName}) {
+    state.user.name = userName
   },
-  [types.SIGN_UP] () {
-    console.log('mutated sign up')
-  },
-  [types.AUTH_SUCCESS] (state, {user}) {
+  [types.AUTH_SUCCESS] (state, {userName, userID}) {
     state.isLoggedin = true
-    state.user = user
+    state.user.name = userName
+    state.user.id = userID
     console.log('auth Success')
   }
 }

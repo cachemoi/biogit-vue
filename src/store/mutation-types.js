@@ -1,14 +1,13 @@
 // Auth handling
-export const SIGN_UP = 'SIGN_UP'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const SET_EMAIL = 'SET_EMAIL'
 export const SET_PASSWORD = 'SET_PASSWORD'
 export const SET_USERNAME = 'SET_USERNAME'
-// Item view handling
-export const SET_ITEMS = 'SET_ITEMS'
-export const FOCUS_ITEM = 'FOCUS_ITEM'
-// Item data handling
-export const SET_ITEM_DATA = 'SET_ITEM_DATA'
+// Rerpositories data handling
+export const SET_REPOS = 'SET_REPOS'
+// focused Repo handling
+export const FOCUS_REPO = 'FOCUS_REPO'
+export const SET_FOCUSED_REPO_NAME = 'SET_FOCUSED_REPO_NAME'
 // status handling
 export const SET_ERROR = 'SET_ERROR'
 export const DISMISS_ERROR = 'DISMISS_ERROR'

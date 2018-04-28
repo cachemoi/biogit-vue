@@ -1,24 +1,19 @@
 <template>
   <div class="card text-center" style="width: 12rem;">
     <div class="card-header">
-      Your Items
+      Your Repositories
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item" v-if="items.length === 0">
-        <p>You don't have any items yet, click to add some!</p>
+      <li class="list-group-item" v-if="Object.keys(repos).length === 0 && repos.constructor === Object">
+        <p>You don't have any repositories yet, click to add some!</p>
       </li>
-      <li class="list-group-item" v-for="item in items" :key="item.name" v-if="item.class === 'system'">
-        <router-link :to="{name: 'system-view', params: { itemID : item.id}}" class="card-link system">
-          {{item.name}}
-        </router-link>
-      </li>
-      <li class="list-group-item" v-else-if="item.class === 'experiment'">
-        <router-link :to="{name: 'experiment-view', params: { itemID : item.id}}" class="card-link experiment">
-          {{item.name}}
+      <li class="list-group-item" v-for="repo in repos" :key="repo.name">
+        <router-link to="/repo-view" class="card-link system">
+          {{repo.name}}
         </router-link>
       </li>
       <li class="list-group-item">
-        <new-item-button></new-item-button>
+        <new-repo-button></new-repo-button>
       </li>
     </ul>
   </div>
@@ -26,17 +21,21 @@
 
 <script>
 import {mapState} from 'vuex'
-import NewItemButton from '../buttons/NewItemButton'
+import NewRepoButton from '../buttons/NewRepoButton'
 
 export default {
   name: 'UserRepos',
   components: {
-    NewItemButton
+    NewRepoButton
   },
   computed: {
     ...mapState({
-      items: state => state.items.items
+      repos: state => state.repos.repos,
+      userID: state => state.auth.user.id
     })
+  },
+  mounted () {
+    this.$store.dispatch('getUserRepos', this.userID)
   }
 }
 </script>

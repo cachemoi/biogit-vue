@@ -1,30 +1,32 @@
 import { GraphQLClient } from 'graphql-request'
 // import gql from 'graphql-tag'
 
-const client = new GraphQLClient('https://api.graph.cool/simple/v1/cja29wrui3kek01571mxxfexh', {
+const client = new GraphQLClient('https://api.graph.cool/simple/v1/cjgjfc3us6w7i0174gjbfa3yh', {
   headers: {
     Authorization: 'Bearer YOUR_AUTH_TOKEN'
   }
 })
 
-function authUser (email, password) {
+function authUser (email) {
   const queryUser = `
-    mutation authenticateUser($email: String!, $password: String!) {
-      authenticateUser(email: $email, password: $password) {
-        id
-        token
-      }
+  query User($email: String!) {
+    User(email: $email) {
+      id
+      name
     }
+  }
   `
 
-  return client.request(queryUser, {email: email, password: password})
+  return client.request(queryUser, {email: email})
 }
 
 function signUpUser (userName, email, password) {
   const createUser = `
   mutation signUpUser($userName: String!, $email: String!, $password: String!){
-    signupUser(userName: $userName, email: $email, password: $password){
+    signupUser(name: $userName, email: $email, password: $password){
       id
+      name
+      email
     }
   }
   `

@@ -12,23 +12,13 @@
 <script>
   import UserRepos from '../nav/UserRepos'
   import UserHomePanel from '../panels/UserHomePanel'
-  import {mapState} from 'vuex'
 
   export default {
     components: {
       UserRepos,
       UserHomePanel
     },
-    computed: {
-      ...mapState({
-        user: state => state.auth.user
-      })
-    },
-    name: 'HomeView',
-    mounted () {
-      console.log('HomeView mounted')
-      this.$store.dispatch('getUserItems', this.user.id)
-    }
+    name: 'HomeView'
   }
 </script>
 

@@ -1,5 +1,5 @@
 {
-  "name": "biogit-vue",
+  "name": "biogit",
   "version": "1.0.0",
   "description": "Biogit, the modern framework for scientific research",
   "author": "cachemoi <m.rothierbautzer@gmail.com>",
@@ -13,7 +13,6 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^2.0.0-rc.8",
     "express": "^4.16.3",

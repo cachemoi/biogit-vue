@@ -25,24 +25,24 @@
   export default {
     computed: {
       ...mapState({
-        email: state => state.auth.email,
-        password: state => state.auth.password
+        email: state => state.auth.user.email,
+        password: state => state.auth.user.password
       })
     },
     methods: {
-      async login () {
+      login () {
         try {
-          await this.$store.dispatch('login')
+          this.$store.dispatch('auth')
         } catch (e) {
           console.log(e)
         }
-        this.$router.push({path: ''})
+        this.$router.push({path: '/'})
       },
       updateMail (e) {
-        this.$store.commit('SET_EMAIL', e.target.value)
+        this.$store.commit('SET_EMAIL', {email: e.target.value})
       },
       updatePass (e) {
-        this.$store.commit('SET_PASSWORD', e.target.value)
+        this.$store.commit('SET_PASSWORD', {password: e.target.value})
       }
     }
   }
