@@ -12,7 +12,7 @@
                             buttons
                             button-variant="outline-primary"
                             size="lg"
-                            v-model="selected"
+                            @v-model="moduleType"
                             :options="[
                               { text: 'System', value: 'System' },
                               { text: 'Protocol', value: 'Protocol' },
@@ -37,15 +37,24 @@
     computed: {
       ...mapState({
         repoID: state => state.auth.focusedRepoid,
-        focusedModuleName: state => state.modules.focusedModule.name
-      })
+        focusedModule: state => state.modules.focusedModule
+      }),
+      moduleType: {
+        get () {
+          return this.$store.state.modules.focusedModule.type
+        },
+        set (value) {
+          this.$store.commit('SET_FOCUSED_MODULE_TYPE', value)
+        }
+      }
     },
     methods: {
       createModule () {
         const newModuleID = this.$store.dispatch('createModule', {
           repoID: this.repoID,
-          Name: this.focusedModuleName
-
+          moduleName: this.focusedModule.name,
+          // TODO hardocoded type
+          moduleType: 'System'
         })
         console.log(newModuleID)
         this.$router.push({path: '/module-view'})

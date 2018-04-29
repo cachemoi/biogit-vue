@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column flex-wrap p-4">
-    <h1 class="p-4">{{userName + " / " + focfocusedRepoName +  " / " + focfocusedModule.name}}</h1>
+    <h1 class="p-4">{{userName + " / " + focusedRepoName +  " / " + focusedModule.name}}</h1>
   </div>
 </template>
 
@@ -12,7 +12,7 @@
     computed: {
       ...mapState({
         focusedModule: state => state.modules.focusedModule,
-        focusedRepoName: state => state.modules.focusedRepo.name,
+        focusedRepoName: state => state.repos.focusedRepo.name,
         userName: state => state.auth.user.name
       })
     }

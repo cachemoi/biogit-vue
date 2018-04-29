@@ -2,6 +2,8 @@ import ReposAPI from '../api/repos'
 import * as types from '../mutation-types'
 import Vue from 'vue'
 
+// TODO USE GETTERS NOT 'FOCUSEX'
+
 /*
 Repositories hold knowledge modules
 Possible modules:

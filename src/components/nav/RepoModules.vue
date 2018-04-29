@@ -1,24 +1,29 @@
 <template>
-  <div class="card text-center">
-    <div class="card-header">
+  <div class="card">
+    <div class="card-header text-center">
       Knowledge modules
     </div>
     <ul class="list-group list-group-flush">
       <div v-if="modulePresent">
-        <li class="list-group-item" v-for="experiment of experiments" :key="experiment.id">
+        <li class="list-group-item d-flex flex-wrap text-success" v-for="experiment of experiments" :key="experiment.id">
           {{experiment.name}}
+          <img class="ml-auto" src="../../assets/moduleIcons/experiment.svg" height="50" width="50">
         </li>
-        <li class="list-group-item" v-for="protocol of protocols" :key="protocol.id">
-          {{protocol.name}}
+        <li class="list-group-item d-flex flex-wrap text-danger" v-for="protocol of protocols" :key="protocol.id">
+          <router-link class="nav-link" @click.native="focusModule" :id="protocol.id" to="/module-view">
+            {{protocol.name}}
+          </router-link>
+          <img class="ml-auto" src="../../assets/moduleIcons/protocol.svg" height="20" width="20">
         </li>
-        <li class="list-group-item" v-for="system of systems" :key="system.id">
+        <li class="list-group-item d-flex flex-wrap text-primary" v-for="system of systems" :key="system.id">
           {{system.name}}
+          <img class="ml-auto" src="../../assets/moduleIcons/system.svg" height="50" width="50">
         </li>
       </div>
       <li v-else class="list-group-item">
         <p>This repository is empty, add some knowledge modules?</p>
       </li>
-      <li class="list-group-item">
+      <li class="list-group-item text-center">
         <new-module-button></new-module-button>
       </li>
     </ul>
@@ -44,6 +49,12 @@ export default {
     modulePresent () {
       console.log(this.$store.getters.modulePresent)
       return this.$store.getters.modulePresent
+    }
+  },
+  methods: {
+    focusModule (e) {
+      console.log(e.target.id)
+      this.$store.commit('FOCUS_MODULE', {moduleID: e.target.id})
     }
   }
 }

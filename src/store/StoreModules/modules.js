@@ -1,6 +1,7 @@
 import modulesAPI from '../api/modules'
 import * as types from '../mutation-types'
 import Vue from 'vue'
+// TODO USE GETTERS NOT 'FOCUSEX'
 
 // intial state
 const state = {
@@ -8,7 +9,8 @@ const state = {
   protocols: {}, // IDs as keys for data
   systems: {}, // IDs as keys for data
   focusedModule: {
-    name: null
+    name: null,
+    type: 'System'
   }
 }
 
@@ -30,6 +32,20 @@ const getters = {
         check = false
     }
     return check
+  },
+  moduleType: (state, getters) => (moduleID) => {
+    if (moduleID in state.protocols) {
+      return 'Protocol'
+    } else if (moduleID in state.experiments) {
+      return 'Experiment'
+    } else if (moduleID in state.systems) {
+      return 'System'
+    } else {
+      throw new Error('module not found')
+    }
+  },
+  selectModule: (state, getters) => (moduleId) => {
+    return getters.allModules[moduleId]
   },
   allModules: state => {
     return {...state.experiments, ...state.protocols, ...state.systems}
@@ -77,7 +93,15 @@ const actions = {
 // mutations
 const mutations = {
   [types.FOCUS_MODULE] (state, {moduleID}) {
-    state.focusedModule = state.modules[moduleID]
+    if (moduleID in state.protocols) {
+      state.focusedModule = state.protocols[moduleID]
+    } else if (moduleID in state.experiments) {
+      state.focusedModule = state.experiments[moduleID]
+    } else if (moduleID in state.systems) {
+      state.focusedModule = state.systems[moduleID]
+    } else {
+      throw new Error('module not found')
+    }
   },
   [types.ADD_MODULES] (state, {experiments, protocols, systems}) {
     for (let experiment of experiments) {
@@ -90,6 +114,12 @@ const mutations = {
     for (let system of systems) {
       Vue.set(state.protocols, system.id, {...system})
     }
+  },
+  [types.SET_FOCUSED_MODULE_NAME] (state, {moduleName}) {
+    state.focusedModule.name = moduleName
+  },
+  [types.SET_FOCUSED_MODULE_TYPE] (state, { moduleType }) {
+    state.focusedModule.type = moduleType
   }
 }
 
