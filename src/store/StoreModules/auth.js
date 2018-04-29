@@ -66,6 +66,15 @@ const mutations = {
     state.user.name = userName
     state.user.id = userID
     console.log('auth Success')
+  },
+  [types.LOGOUT] (state) {
+    state.isLoggedin = false
+    state.user = {
+      id: null,
+      email: null,
+      password: null,
+      name: null
+    }
   }
 }
 

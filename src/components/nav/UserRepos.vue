@@ -8,7 +8,7 @@
         <p>You don't have any repositories yet, click to add some!</p>
       </li>
       <li class="list-group-item" v-for="repo in repos" :key="repo.name">
-        <router-link to="/repo-view" class="card-link system">
+        <router-link to="/repo-view" @click.native="focusRepo" :id="repo.id" class="card-link">
           {{repo.name}}
         </router-link>
       </li>
@@ -36,6 +36,13 @@ export default {
   },
   mounted () {
     this.$store.dispatch('getUserRepos', this.userID)
+  },
+  methods: {
+    focusRepo (e) {
+      console.log(e.target.id)
+      this.$store.dispatch('getRepoModules', e.target.id)
+      this.$store.commit('FOCUS_REPO', {repoID: e.target.id})
+    }
   }
 }
 </script>

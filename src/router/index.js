@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import LandingView from '@/components/view/LandingView'
 import RepoView from '@/components/view/RepoView'
+import ModuleView from '@/components/view/ModuleView'
 
 Vue.use(Router)
 
@@ -15,6 +16,10 @@ const router = new Router({
     {
       path: '/repo-view',
       component: RepoView
+    },
+    {
+      path: '/module-view',
+      component: ModuleView
     }
   ]
 })

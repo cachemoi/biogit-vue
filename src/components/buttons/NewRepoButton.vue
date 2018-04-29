@@ -25,16 +25,18 @@
     name: 'NewItemButton',
     computed: {
       ...mapState({
-        userID: state => state.auth.user.userID,
+        userID: state => state.auth.user.id,
         focusedRepoName: state => state.repos.focusedRepo.name
       })
     },
     methods: {
       createRepo () {
-        this.$store.dispatch('createRepo', {
+        const newRepoID = this.$store.dispatch('createRepo', {
           userID: this.userID,
           newRepoName: this.focusedRepoName
         })
+        console.log(newRepoID)
+        this.$router.push({path: '/repo-view'})
       },
       updateFocusedRepoName (e) {
         this.$store.commit('SET_FOCUSED_REPO_NAME', {repoName: e.target.value})

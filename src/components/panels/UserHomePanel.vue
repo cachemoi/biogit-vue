@@ -2,10 +2,10 @@
   <b-card no-body>
     <b-tabs card>
       <b-tab title="Your Feed" active>
-        people you follow/your own repos
+        People you follow/your own repos
       </b-tab>
       <b-tab title="World Feed">
-        Items Published around the world
+        Modules Published around the world
       </b-tab>
     </b-tabs>
   </b-card>

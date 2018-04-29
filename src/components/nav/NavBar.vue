@@ -16,6 +16,9 @@
             <login-button></login-button>
             <sign-up-button></sign-up-button>
         </b-navbar-nav>
+        <b-navbar-nav class="ml-auto" v-else>
+          <logout-button></logout-button>
+        </b-navbar-nav>
       </b-collapse>
     </b-navbar>
   </div>
@@ -24,12 +27,14 @@
 <script>
 import LoginButton from '../buttons/LoginButton'
 import SignUpButton from '../buttons/SignUpButton'
+import LogoutButton from '../buttons/LogoutButton'
 import {mapState} from 'vuex'
 
 export default {
   components: {
     LoginButton,
-    SignUpButton
+    SignUpButton,
+    LogoutButton
   },
   computed: {
     ...mapState({

@@ -1,22 +1,18 @@
 <template>
   <div class="d-flex flex-column flex-wrap p-4">
-    <h1 class="p-4">{{userName + " / " + focusedRepo.name}}</h1>
-    <RepoModules></RepoModules>
+    <h1 class="p-4">{{userName + " / " + focfocusedRepoName +  " / " + focfocusedModule.name}}</h1>
   </div>
 </template>
 
 <script>
   import {mapState} from 'vuex'
-  import RepoModules from '../nav/RepoModules'
 
   export default {
-    name: 'RepoView',
-    components: {
-      RepoModules
-    },
+    name: 'ModuleView',
     computed: {
       ...mapState({
-        focusedRepo: state => state.repos.focusedRepo,
+        focusedModule: state => state.modules.focusedModule,
+        focusedRepoName: state => state.modules.focusedRepo.name,
         userName: state => state.auth.user.name
       })
     }

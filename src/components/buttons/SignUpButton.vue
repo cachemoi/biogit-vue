@@ -43,7 +43,7 @@
         } catch (e) {
           console.log(e)
         }
-        this.$router.push({path: ''})
+        this.$router.push({path: '/'})
       },
       updateMail (e) {
         this.$store.commit('SET_EMAIL', e.target.value)
