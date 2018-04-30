@@ -5,21 +5,9 @@
     </b-btn>
     <b-modal id="NewModuleModal" title="New Knowledge module" :hide-footer="true">
       <div class="form-group">
-        <input type="text" @change="updateFocusedModuleName" placeholder="Enter module name" class="form-control"/>
+        <input type="text" @change="updateNewModuleName" placeholder="Enter module name" class="form-control"/>
       </div>
-      <b-form-group label="Module type">
-        <b-form-radio-group id="btnradios2"
-                            buttons
-                            button-variant="outline-primary"
-                            size="lg"
-                            @v-model="moduleType"
-                            :options="[
-                              { text: 'System', value: 'System' },
-                              { text: 'Protocol', value: 'Protocol' },
-                              { text: 'Experiment', value: 'Experiment' }
-                            ]"
-                            name="radioBtnOutline" />
-      </b-form-group>
+
       <div class="form-group">
         <button @click.prevent="createModule" class="btn btn-outline-primary">
           ~+~
@@ -36,7 +24,7 @@
     name: 'NewModuleButton',
     computed: {
       ...mapState({
-        repoID: state => state.auth.focusedRepoid,
+        focusedRepoID: state => state.repos.focusedRepoID,
         focusedModule: state => state.modules.focusedModule
       }),
       moduleType: {
@@ -44,7 +32,7 @@
           return this.$store.state.modules.focusedModule.type
         },
         set (value) {
-          this.$store.commit('SET_FOCUSED_MODULE_TYPE', value)
+          this.$store.commit('SET_NEW_MODULE_TYPE', value)
         }
       }
     },
@@ -59,8 +47,8 @@
         console.log(newModuleID)
         this.$router.push({path: '/module-view'})
       },
-      updateFocusedModuleName (e) {
-        this.$store.commit('SET_FOCUSED_MODULE_NAME', {moduleName: e.target.value})
+      updateNewModuleName (e) {
+        this.$store.commit('SET_NEW_MODULE_NAME', {moduleName: e.target.value})
       }
     }
   }

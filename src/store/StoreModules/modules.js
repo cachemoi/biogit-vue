@@ -1,16 +1,16 @@
 import modulesAPI from '../api/modules'
 import * as types from '../mutation-types'
 import Vue from 'vue'
-// TODO USE GETTERS NOT 'FOCUSEX'
 
 // intial state
 const state = {
   experiments: {}, // IDs as keys for data
   protocols: {}, // IDs as keys for data
   systems: {}, // IDs as keys for data
-  focusedModule: {
+  focusedModuleID: null, // ID of the focused module
+  newModule: {
     name: null,
-    type: 'System'
+    type: null
   }
 }
 
@@ -46,6 +46,9 @@ const getters = {
   },
   selectModule: (state, getters) => (moduleId) => {
     return getters.allModules[moduleId]
+  },
+  focusedModuleDat: (state, getters) => {
+    return getters.allModules[state.focusedModuleID]
   },
   allModules: state => {
     return {...state.experiments, ...state.protocols, ...state.systems}
@@ -115,11 +118,11 @@ const mutations = {
       Vue.set(state.protocols, system.id, {...system})
     }
   },
-  [types.SET_FOCUSED_MODULE_NAME] (state, {moduleName}) {
-    state.focusedModule.name = moduleName
+  [types.SET_NEW_MODULE_NAME] (state, {moduleName}) {
+    state.newModule.name = moduleName
   },
-  [types.SET_FOCUSED_MODULE_TYPE] (state, { moduleType }) {
-    state.focusedModule.type = moduleType
+  [types.SET_NEW_MODULE_TYPE] (state, { moduleType }) {
+    state.newModule.type = moduleType
   }
 }
 

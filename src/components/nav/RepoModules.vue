@@ -5,19 +5,23 @@
     </div>
     <ul class="list-group list-group-flush">
       <div v-if="modulePresent">
-        <li class="list-group-item d-flex flex-wrap text-success" v-for="experiment of experiments" :key="experiment.id">
-          {{experiment.name}}
-          <img class="ml-auto" src="../../assets/moduleIcons/experiment.svg" height="50" width="50">
+        <li class="list-group-item d-flex flex-wrap" v-for="experiment of experiments" :key="experiment.id">
+          <router-link class="nav-link p-0 m-0" @click.native="focusModule" :id="experiment.id" to="/module-view">
+            {{experiment.name}}
+          </router-link>
+          <img class="ml-auto " src="../../assets/moduleIcons/experiment.svg" height="20" width="20">
         </li>
-        <li class="list-group-item d-flex flex-wrap text-danger" v-for="protocol of protocols" :key="protocol.id">
-          <router-link class="nav-link" @click.native="focusModule" :id="protocol.id" to="/module-view">
+        <li class="list-group-item d-flex flex-wrap" v-for="protocol of protocols" :key="protocol.id">
+          <router-link class="nav-link p-0 m-0" @click.native="focusModule" :id="protocol.id" to="/module-view">
             {{protocol.name}}
           </router-link>
           <img class="ml-auto" src="../../assets/moduleIcons/protocol.svg" height="20" width="20">
         </li>
-        <li class="list-group-item d-flex flex-wrap text-primary" v-for="system of systems" :key="system.id">
-          {{system.name}}
-          <img class="ml-auto" src="../../assets/moduleIcons/system.svg" height="50" width="50">
+        <li class="list-group-item d-flex flex-wrap" v-for="system of systems" :key="system.id">
+          <router-link class="nav-link p-0 m-0" @click.native="focusModule" :id="system.id" to="/module-view">
+            {{system.name}}
+          </router-link>
+          <img class="ml-auto" src="../../assets/moduleIcons/system.svg" height="20" width="20">
         </li>
       </div>
       <li v-else class="list-group-item">
@@ -44,10 +48,9 @@ export default {
       experiments: state => state.modules.experiments,
       protocols: state => state.modules.protocols,
       systems: state => state.modules.systems,
-      focusedRepoID: state => state.repos.focusedRepo.id
+      focusedRepoID: state => state.repos.focusedRepoID
     }),
     modulePresent () {
-      console.log(this.$store.getters.modulePresent)
       return this.$store.getters.modulePresent
     }
   },

@@ -7,11 +7,13 @@ export const LOGOUT = 'LOGOUT'
 // Rerpositories data handling
 export const SET_REPOS = 'SET_REPOS'
 export const ADD_REPO = 'ADD_REPO'
+export const ADD_REPO_DATA = 'ADD_REPO_DATA'
 // focused Repo handling
 export const FOCUS_REPO = 'FOCUS_REPO'
-export const SET_FOCUSED_REPO_NAME = 'SET_FOCUSED_REPO_NAME'
+// New repo data handling
+export const SET_NEW_REPO_NAME = 'SET_NEW_REPO_NAME'
 // Module handling
 export const FOCUS_MODULE = 'FOCUS_MODULE'
-export const SET_FOCUSED_MODULE_NAME = 'SET_FOCUSED_MODULE_NAME'
-export const SET_FOCUSED_MODULE_TYPE = 'SET_FOCUSED_MODULE_TYPE'
+export const SET_NEW_MODULE_NAME = 'SET_NEW_MODULE_NAME'
+export const SET_NEW_MODULE_TYPE = 'SET_NEW_MODULE_TYPE'
 export const ADD_MODULES = 'ADD_MODULES'

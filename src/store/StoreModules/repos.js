@@ -15,13 +15,26 @@ Possible modules:
 // intial state
 const state = {
   repos: {}, // IDs as keys for data
-  focusedRepo: {
-    name: null
+  focusedRepoID: null, // ID of the focused repo
+  newRepo: {
+    name: '',
+    type: ''
   }
 }
 
 // getters
-const getters = {}
+const getters = {
+  focusedRepoDat: state => {
+    return state.repos[state.focusedRepoID]
+  },
+  isRepoFocused: state => {
+    if (state.focusedRepoID) {
+      return true
+    } else {
+      return false
+    }
+  }
+}
 
 // actions
 const actions = {
@@ -33,16 +46,15 @@ const actions = {
           commit(types.SET_REPOS, {repos: data.User.repositories})
         })
     } catch (e) {
-      console.log(new Error(e.toString()))
+      console.log(new Error(e))
     }
   },
   createRepo ({state, commit}, {userID, newRepoName}) {
-    return ReposAPI.createRepo({userID: userID, repoName: newRepoName})
+    ReposAPI.createRepo({userID: userID, repoName: newRepoName})
       .then(data => {
         console.log(data)
         commit('ADD_REPO', {repo: data.createRepository})
         commit('FOCUS_REPO', { repoID: data.createRepository.id })
-        return data.createRepository.id
       })
   },
   getRepo ({commit}, repoID) {
@@ -50,17 +62,18 @@ const actions = {
       ReposAPI.getRepo(repoID).then(
         data => {
           console.log(data)
-          commit('FOCUS_REPO', data.Repo)
+          commit('ADD_REPO', { repo: data.Repo })
+          commit('FOCUS_REPO', data.Repo.id)
         }
       )
     } catch (e) {
       return new Error(e)
     }
   },
-  getRepoData ({commit}, args) {
+  getRepoData ({commit}, {repoID}) {
     try {
-      ReposAPI.getSystemData(args.ID).then(
-        data => commit('SET_REPO_DATA', data.data)
+      ReposAPI.getSystemData(repoID).then(
+        data => commit('ADD_REPO_DATA', {data: data.data, repoID: repoID})
       )
     } catch (e) {
       return new Error(e)
@@ -79,12 +92,16 @@ const mutations = {
     console.log(repo)
     Vue.set(state.repos, repo.id, repo)
   },
+  [types.ADD_REPO_DATA] (state, {data, repoID}) {
+    console.log(data)
+    Vue.set(state.repos, repoID, data)
+  },
   [types.FOCUS_REPO] (state, {repoID}) {
     console.log(repoID)
-    state.focusedRepo = state.repos[repoID]
+    state.focusedRepoID = repoID
   },
-  [types.SET_FOCUSED_REPO_NAME] (state, {repoName}) {
-    state.focusedRepo.name = repoName
+  [types.SET_NEW_REPO_NAME] (state, {newRepoName}) {
+    state.newRepo.name = newRepoName
   }
 }
 

@@ -6,7 +6,7 @@
     <b-modal id="NewRepoModal" title="New Repository" :hide-footer="true">
       <form>
         <div class="form-group">
-          <input type="text" @change="updateFocusedRepoName" placeholder="Enter repo name" class="form-control"/>
+          <input type="text" @change="updateNewRepoName" placeholder="Enter repo name" class="form-control"/>
         </div>
         <div class="form-group">
           <button @click.prevent="createRepo" class="btn btn-outline-primary">
@@ -22,24 +22,23 @@
   import {mapState} from 'vuex'
 
   export default {
-    name: 'NewItemButton',
+    name: 'NewRepoButton',
     computed: {
       ...mapState({
         userID: state => state.auth.user.id,
-        focusedRepoName: state => state.repos.focusedRepo.name
+        newRepo: state => state.repos.newRepo
       })
     },
     methods: {
       createRepo () {
-        const newRepoID = this.$store.dispatch('createRepo', {
+        this.$store.dispatch('createRepo', {
           userID: this.userID,
-          newRepoName: this.focusedRepoName
+          newRepoName: this.newRepo.name
         })
-        console.log(newRepoID)
         this.$router.push({path: '/repo-view'})
       },
-      updateFocusedRepoName (e) {
-        this.$store.commit('SET_FOCUSED_REPO_NAME', {repoName: e.target.value})
+      updateNewRepoName (e) {
+        this.$store.commit('SET_NEW_REPO_NAME', {newRepoName: e.target.value})
       }
     }
   }
