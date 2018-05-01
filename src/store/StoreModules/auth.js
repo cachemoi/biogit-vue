@@ -21,7 +21,6 @@ const actions = {
     try {
       await authAPI.authUser(state.user.email)
         .then(data => {
-          console.log(data)
           if (data.User) {
             const user = {...data.User}
             commit(types.AUTH_SUCCESS, {userName: user.name, userID: user.id})
@@ -65,7 +64,6 @@ const mutations = {
     state.isLoggedin = true
     state.user.name = userName
     state.user.id = userID
-    console.log('auth Success')
   },
   [types.LOGOUT] (state) {
     state.isLoggedin = false

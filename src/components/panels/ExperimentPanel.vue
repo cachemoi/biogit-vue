@@ -1,10 +1,21 @@
 <template>
-  <h1>Experiment</h1>
+  <div>
+    <h1>Experiment</h1>
+    <h3>{{focusedModuleDat.name}}</h3>
+  </div>
 </template>
 
 <script>
+  import {mapState, mapGetters} from 'vuex'
+
   export default {
-    name: 'ExperimentPanel'
+    name: 'ExperimentPanel',
+    computed: {
+      ...mapState({}),
+      ...mapGetters([
+        'focusedModuleDat'
+      ])
+    }
   }
 </script>
 

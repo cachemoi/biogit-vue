@@ -1,10 +1,20 @@
 <template>
-  <h1>System</h1>
+  <div>
+    <h1>System</h1>
+    <h3>{{focusedModuleDat.name}}</h3>
+  </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+
   export default {
-    name: 'SystemPanel'
+    name: 'SystemPanel',
+    computed: {
+      ...mapGetters([
+        'focusedModuleDat'
+      ])
+    }
   }
 </script>
 

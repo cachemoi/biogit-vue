@@ -34,7 +34,6 @@ function getRepoModulesID (repoID) {
 
 // createModule will create a module of the given type and return the name and ID
 function createModule ({repoID, moduleName, moduleType}) {
-  console.log(repoID, moduleName, moduleType)
   switch (moduleType) {
     case 'Protocol':
       const createProtocolQuery = `
@@ -49,6 +48,9 @@ function createModule ({repoID, moduleName, moduleType}) {
         }
         `
       return client.request(createProtocolQuery, { id: repoID, name: moduleName })
+      .then(data => {
+        return data.createProtocol
+      })
     case 'System':
       const createSystemQuery = `
         mutation createSystem ($name: String!, $id: ID!) {
@@ -61,7 +63,9 @@ function createModule ({repoID, moduleName, moduleType}) {
           }
         }
         `
-      return client.request(createSystemQuery, { id: repoID, name: moduleName })
+      return client.request(createSystemQuery, { id: repoID, name: moduleName }).then(data => {
+        return data.createSystem
+      })
     case 'Experiment':
       const createExperimentQuery = `
         mutation createExperiment ($name: String!, $id: ID!) {
@@ -74,13 +78,15 @@ function createModule ({repoID, moduleName, moduleType}) {
           }
         }
         `
-      return client.request(createExperimentQuery, { id: repoID, name: moduleName })
+      return client.request(createExperimentQuery, { id: repoID, name: moduleName }).then(data => {
+        return data.createExperiment
+      })
   }
 }
 
 const api = {
   getRepoModulesID: getRepoModulesID,
-  createItem: createModule
+  createModule: createModule
 }
 
 export default api

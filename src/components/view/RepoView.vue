@@ -1,6 +1,6 @@
 <template>
   <div v-if="isRepoFocused" class="d-flex flex-column flex-wrap p-4">
-    <h1 class="p-4">{{userName + " / " + focusedRepoDat.name}}</h1>
+    <position-crumbs></position-crumbs>
     <RepoModules></RepoModules>
   </div>
   <div v-else>
@@ -9,22 +9,32 @@
 </template>
 
 <script>
-  import {mapState, mapGetters} from 'vuex'
+  import {mapGetters} from 'vuex'
+  import PositionCrumbs from '../nav/PositionCrumbs'
   import RepoModules from '../nav/RepoModules'
 
   export default {
     name: 'RepoView',
     components: {
-      RepoModules
+      RepoModules,
+      PositionCrumbs
     },
+    props: ['id'],
     computed: {
-      ...mapState({
-        userName: state => state.auth.user.name
-      }),
       ...mapGetters([
-        'focusedRepoDat',
         'isRepoFocused'
       ])
+    },
+    created () {
+      this.setFocusedRepo(this.id)
+    },
+    watch: {
+      '$route': 'setFocusedRepo'
+    },
+    methods: {
+      setFocusedRepo (id) {
+        this.$store.commit('FOCUS_REPO', {repoID: id})
+      }
     }
   }
 </script>

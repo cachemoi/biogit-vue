@@ -14,12 +14,16 @@ const router = new Router({
       component: LandingView
     },
     {
-      path: '/repo-view',
-      component: RepoView
+      path: '/repo/:id',
+      component: RepoView,
+      name: 'repo',
+      props: true
     },
     {
-      path: '/module-view',
-      component: ModuleView
+      path: '/module/:id',
+      component: ModuleView,
+      name: 'module',
+      props: true
     }
   ]
 })

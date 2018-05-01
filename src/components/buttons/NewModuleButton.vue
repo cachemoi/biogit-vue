@@ -7,7 +7,28 @@
       <div class="form-group">
         <input type="text" @change="updateNewModuleName" placeholder="Enter module name" class="form-control"/>
       </div>
-
+      <div class="form-group">
+        <div class="btn-group">
+          <button class="btn btn-outline-primary"
+                  :class="{ active: isSystem }"
+                  @click.prevent="changeNewModuleType('System')"
+                  >
+            System
+          </button>
+          <button class="btn btn-outline-primary"
+                  :class="{ active: isProtocol }"
+                  @click.prevent="changeNewModuleType('Protocol')"
+                  >
+            Protocol
+          </button>
+          <button class="btn btn-outline-primary"
+                  :class="{ active: isExperiment }"
+                  @click.prevent="changeNewModuleType('Experiment')"
+                  >
+            Experiment
+          </button>
+        </div>
+      </div>
       <div class="form-group">
         <button @click.prevent="createModule" class="btn btn-outline-primary">
           ~+~
@@ -25,27 +46,44 @@
     computed: {
       ...mapState({
         focusedRepoID: state => state.repos.focusedRepoID,
-        focusedModule: state => state.modules.focusedModule
+        newModule: state => state.modules.newModule
       }),
-      moduleType: {
-        get () {
-          return this.$store.state.modules.focusedModule.type
-        },
-        set (value) {
-          this.$store.commit('SET_NEW_MODULE_TYPE', value)
+      isSystem: function () {
+        if (this.newModule.type === 'System') {
+          return true
+        } else {
+          return false
+        }
+      },
+      isProtocol: function () {
+        if (this.newModule.type === 'Protocol') {
+          return true
+        } else {
+          return false
+        }
+      },
+      isExperiment: function () {
+        if (this.newModule.type === 'Experiment') {
+          return true
+        } else {
+          return false
         }
       }
     },
     methods: {
+      changeNewModuleType (newType) {
+        this.$store.commit('SET_NEW_MODULE_TYPE', {moduleType: newType})
+      },
       createModule () {
-        const newModuleID = this.$store.dispatch('createModule', {
-          repoID: this.repoID,
-          moduleName: this.focusedModule.name,
-          // TODO hardocoded type
-          moduleType: 'System'
-        })
-        console.log(newModuleID)
-        this.$router.push({path: '/module-view'})
+        this.$store.dispatch('createModule', {
+          repoID: this.focusedRepoID,
+          moduleName: this.newModule.name,
+          moduleType: this.newModule.type
+        }).then(
+          createdID => {
+            this.$router.push({name: 'module', props: {id: createdID}})
+          }
+        )
       },
       updateNewModuleName (e) {
         this.$store.commit('SET_NEW_MODULE_NAME', {moduleName: e.target.value})

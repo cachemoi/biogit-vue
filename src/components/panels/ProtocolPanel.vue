@@ -1,10 +1,20 @@
 <template>
-  <h1>Protocol</h1>
+  <div>
+    <h1>Protocol</h1>
+    <h3>{{focusedModuleDat.name}}</h3>
+  </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+
   export default {
-    name: 'ProtocolPanel'
+    name: 'ProtocolPanel',
+    computed: {
+      ...mapGetters([
+        'focusedModuleDat'
+      ])
+    }
   }
 </script>
 

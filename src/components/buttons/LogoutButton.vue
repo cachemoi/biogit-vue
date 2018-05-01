@@ -9,11 +9,7 @@
     name: 'LogoutButton',
     methods: {
       logout () {
-        try {
-          this.$store.commit('LOGOUT')
-        } catch (e) {
-          console.log(e)
-        }
+        this.$store.commit('LOGOUT')
       }
     }
   }

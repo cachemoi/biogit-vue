@@ -38,11 +38,7 @@
     },
     methods: {
       async signUp () {
-        try {
-          await this.$store.dispatch('signUp')
-        } catch (e) {
-          console.log(e)
-        }
+        await this.$store.dispatch('signUp')
         this.$router.push({path: '/'})
       },
       updateMail (e) {

@@ -34,6 +34,7 @@ const getters = {
     return check
   },
   moduleType: (state, getters) => (moduleID) => {
+    console.log(moduleID)
     if (moduleID in state.protocols) {
       return 'Protocol'
     } else if (moduleID in state.experiments) {
@@ -41,7 +42,15 @@ const getters = {
     } else if (moduleID in state.systems) {
       return 'System'
     } else {
-      throw new Error('module not found')
+      return null
+    }
+  },
+  focusedModuleType: (state, getters) => {
+    if (state.focusedModuleID === null) {
+      return null
+    } else {
+      console.log(state.focusedModuleID)
+      return getters.moduleType(state.focusedModuleID)
     }
   },
   selectModule: (state, getters) => (moduleId) => {
@@ -60,35 +69,34 @@ const actions = {
   async getRepoModules ({state, commit}, repoID) {
     await modulesAPI.getRepoModulesID(repoID)
     .then(data => {
-      console.log(data)
       let extractedModules = {
         experiments: [],
         protocols: [],
         systems: []
       }
       for (let experiment of data.Repository.experiments) {
-        console.log(experiment)
         extractedModules.experiments.push(experiment)
       }
       for (let protocol of data.Repository.protocols) {
-        console.log(protocol)
         extractedModules.protocols.push(protocol)
       }
       for (let system of data.Repository.systems) {
         extractedModules.systems.push(system)
       }
-      console.log(extractedModules)
-      commit('ADD_MODULES', {
+      commit('SET_MODULES', {
         experiments: extractedModules.experiments,
         protocols: extractedModules.protocols,
         systems: extractedModules.systems
       })
     })
   },
-  async createModule ({state, commit}, {repoID, moduleType, moduleName}) {
-    await modulesAPI.createModule({repoID: repoID, moduleType: moduleType, moduleName: moduleName})
+  createModule ({state, commit}, {repoID, moduleType, moduleName}) {
+    return modulesAPI.createModule({repoID: repoID, moduleType: moduleType, moduleName: moduleName})
     .then(data => {
       console.log(data)
+      commit('ADD_MODULE', {module: data, type: state.newModule.type})
+      commit('FOCUS_MODULE', { moduleID: data.id })
+      return data.id
     })
   }
 }
@@ -96,14 +104,18 @@ const actions = {
 // mutations
 const mutations = {
   [types.FOCUS_MODULE] (state, {moduleID}) {
-    if (moduleID in state.protocols) {
-      state.focusedModule = state.protocols[moduleID]
-    } else if (moduleID in state.experiments) {
-      state.focusedModule = state.experiments[moduleID]
-    } else if (moduleID in state.systems) {
-      state.focusedModule = state.systems[moduleID]
-    } else {
-      throw new Error('module not found')
+    console.log(moduleID)
+    state.focusedModuleID = moduleID
+  },
+  [types.ADD_MODULE] (state, { module, type }) {
+    console.log('module added', module, type)
+    if (type === 'Experiment') {
+      console.log('Experiment added')
+      Vue.set(state.experiments, module.id, { ...module })
+    } else if (type === 'Protocol') {
+      Vue.set(state.protocols, module.id, { ...module })
+    } else if (type === 'System') {
+      Vue.set(state.systems, module.id, { ...module })
     }
   },
   [types.ADD_MODULES] (state, {experiments, protocols, systems}) {
@@ -111,12 +123,30 @@ const mutations = {
       Vue.set(state.experiments, experiment.id, {...experiment})
     }
     for (let protocol of protocols) {
-      console.log(protocol)
       Vue.set(state.protocols, protocol.id, {...protocol})
     }
     for (let system of systems) {
-      Vue.set(state.protocols, system.id, {...system})
+      Vue.set(state.systems, system.id, {...system})
     }
+  },
+  [types.SET_MODULES] (state, { experiments, protocols, systems }) {
+    let formattedObject = {
+      experiments: {},
+      protocols: {},
+      systems: {}
+    }
+    for (let experiment of experiments) {
+      formattedObject.experiments[experiment.id] = experiment
+    }
+    for (let protocol of protocols) {
+      formattedObject.protocols[protocol.id] = protocol
+    }
+    for (let system of systems) {
+      formattedObject.systems[system.id] = system
+    }
+    state.experiments = formattedObject.experiments
+    state.protocols = formattedObject.protocols
+    state.systems = formattedObject.systems
   },
   [types.SET_NEW_MODULE_NAME] (state, {moduleName}) {
     state.newModule.name = moduleName

@@ -17,8 +17,7 @@ const state = {
   repos: {}, // IDs as keys for data
   focusedRepoID: null, // ID of the focused repo
   newRepo: {
-    name: '',
-    type: ''
+    name: ''
   }
 }
 
@@ -39,7 +38,6 @@ const getters = {
 // actions
 const actions = {
   getUserRepos ({ commit, state }, userID) {
-    console.log(userID)
     try {
       ReposAPI.getUserRepos(userID)
         .then(data => {
@@ -52,7 +50,6 @@ const actions = {
   createRepo ({state, commit}, {userID, newRepoName}) {
     ReposAPI.createRepo({userID: userID, repoName: newRepoName})
       .then(data => {
-        console.log(data)
         commit('ADD_REPO', {repo: data.createRepository})
         commit('FOCUS_REPO', { repoID: data.createRepository.id })
       })
@@ -61,7 +58,6 @@ const actions = {
     try {
       ReposAPI.getRepo(repoID).then(
         data => {
-          console.log(data)
           commit('ADD_REPO', { repo: data.Repo })
           commit('FOCUS_REPO', data.Repo.id)
         }
@@ -89,15 +85,12 @@ const mutations = {
     }
   },
   [types.ADD_REPO] (state, { repo }) {
-    console.log(repo)
     Vue.set(state.repos, repo.id, repo)
   },
   [types.ADD_REPO_DATA] (state, {data, repoID}) {
-    console.log(data)
     Vue.set(state.repos, repoID, data)
   },
   [types.FOCUS_REPO] (state, {repoID}) {
-    console.log(repoID)
     state.focusedRepoID = repoID
   },
   [types.SET_NEW_REPO_NAME] (state, {newRepoName}) {

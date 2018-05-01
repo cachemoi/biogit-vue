@@ -31,11 +31,7 @@
     },
     methods: {
       login () {
-        try {
-          this.$store.dispatch('auth')
-        } catch (e) {
-          console.log(e)
-        }
+        this.$store.dispatch('auth')
         this.$router.push({path: '/'})
       },
       updateMail (e) {
