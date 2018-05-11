@@ -34,7 +34,6 @@ const getters = {
     return check
   },
   moduleType: (state, getters) => (moduleID) => {
-    console.log(moduleID)
     if (moduleID in state.protocols) {
       return 'Protocol'
     } else if (moduleID in state.experiments) {
@@ -49,7 +48,6 @@ const getters = {
     if (state.focusedModuleID === null) {
       return null
     } else {
-      console.log(state.focusedModuleID)
       return getters.moduleType(state.focusedModuleID)
     }
   },
@@ -94,7 +92,10 @@ const actions = {
     return modulesAPI.createModule({repoID: repoID, moduleType: moduleType, moduleName: moduleName})
     .then(data => {
       console.log(data)
-      commit('ADD_MODULE', {module: data, type: state.newModule.type})
+      commit('ADD_MODULE', {
+        module: data,
+        type: state.newModule.type
+      })
       commit('FOCUS_MODULE', { moduleID: data.id })
       return data.id
     })
@@ -111,11 +112,12 @@ const mutations = {
     console.log('module added', module, type)
     if (type === 'Experiment') {
       console.log('Experiment added')
-      Vue.set(state.experiments, module.id, { ...module })
+      console.log(module.id)
+      Vue.set(state.experiments, module.id, module)
     } else if (type === 'Protocol') {
-      Vue.set(state.protocols, module.id, { ...module })
+      Vue.set(state.protocols, module.id, module)
     } else if (type === 'System') {
-      Vue.set(state.systems, module.id, { ...module })
+      Vue.set(state.systems, module.id, module)
     }
   },
   [types.ADD_MODULES] (state, {experiments, protocols, systems}) {

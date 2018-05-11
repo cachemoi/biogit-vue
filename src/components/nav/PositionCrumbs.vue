@@ -4,10 +4,10 @@
       <li class="breadcrumb-item">
         <router-link to="/">{{userName}}</router-link>
       </li>
-      <li v-if="focusedRepoID" class="breadcrumb-item">
+      <li v-if="this.$route.name === 'repo' | this.$route.name === 'module'" class="breadcrumb-item">
         <router-link :to="{name: 'repo', params: {id: focusedRepoID}}">{{focusedRepoDat.name}}</router-link>
       </li>
-      <li v-if="focusedModuleID" class="breadcrumb-item">
+      <li v-if="this.$route.name === 'module'" class="breadcrumb-item">
         <router-link :to="{name: 'module', params: {id: focusedModuleID}}">{{focusedModuleDat.name}}</router-link>
       </li>
     </ol>
