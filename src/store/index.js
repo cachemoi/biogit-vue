@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import auth from './StoreModules/auth'
 import repos from './StoreModules/repos'
 import modules from './StoreModules/modules'
+import news from './StoreModules/news'
 
 Vue.use(Vuex)
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     repos,
-    modules
+    modules,
+    news
   }
 })

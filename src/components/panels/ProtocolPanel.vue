@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1>Protocol</h1>
-    <h3>{{focusedModuleDat.name}}</h3>
+    <h2>{{focusedModuleDat.name}}</h2>
+    
   </div>
 </template>
 

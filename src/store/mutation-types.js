@@ -19,3 +19,5 @@ export const SET_NEW_MODULE_TYPE = 'SET_NEW_MODULE_TYPE'
 export const ADD_MODULES = 'ADD_MODULES'
 export const ADD_MODULE = 'ADD_MODULE'
 export const SET_MODULES = 'SET_MODULES'
+// news handling
+export const SET_NEWS_ITEMS = 'SET_NEWS_ITEMS'

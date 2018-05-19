@@ -12,19 +12,29 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+
   export default {
-    name: 'UserHomePanel'
+    name: 'UserHomePanel',
+    computed: {
+      ...mapState({
+        userID: state => state.auth.userID,
+        newsItems: state => state.news.items
+      })
+    },
+    created () {
+      this.fetchNews()
+    },
+    watch: {
+      '$route': 'fetchNews'
+    },
+    methods: {
+      fetchNews () {
+        this.$store.dispatch('getNews', {userID: this.userID, itemNum: 20})
+      }
+    }
   }
 </script>
 
 <style scoped>
-  .container-fluid{
-    padding-top: 5%
-  }
-  .system {
-    color: #0A81D1;
-  }
-  .experiment {
-    color: #314CB6;
-  }
 </style>
