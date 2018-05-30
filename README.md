@@ -1,5 +1,5 @@
 
-<img src="src/assets/logo.png" alt="logo" width="200" height="200">
+<img src="src/assets/logo.png" alt="logo" width="200">
 
 # Biogit
 
