@@ -1,3 +1,6 @@
+
+[[https://biogit.me/logo.png|alt=logo]]
+
 # Biogit
 
 > Biogit, the modern framework for scientific research
