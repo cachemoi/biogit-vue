@@ -1,5 +1,5 @@
 
-[[https://biogit.me/logo.png|alt=logo]]
+![logo](src/assets/logo.png)
 
 # Biogit
 
