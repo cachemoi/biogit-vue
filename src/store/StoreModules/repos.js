@@ -44,7 +44,7 @@ const actions = {
           commit(types.SET_REPOS, {repos: data.User.repositories})
         })
     } catch (e) {
-      console.Error(e)
+      commit(types.SET_NOTIFICATION, {msg: e, type: 'danger'})
     }
   },
   createRepo ({state, commit}, {userID, newRepoName}) {

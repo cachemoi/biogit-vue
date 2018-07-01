@@ -21,3 +21,6 @@ export const ADD_MODULE = 'ADD_MODULE'
 export const SET_MODULES = 'SET_MODULES'
 // news handling
 export const SET_NEWS_ITEMS = 'SET_NEWS_ITEMS'
+// Notif handling
+export const SET_NOTIFICATION = 'SET_NOTIFICATION'
+export const DISMISS_NOTIFICATION = 'DISMISS_NOTIFICATION'

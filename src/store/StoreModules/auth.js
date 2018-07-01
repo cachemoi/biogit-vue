@@ -24,10 +24,10 @@ const actions = {
           const user = {...data.User}
           commit(types.AUTH_SUCCESS, {userName: user.name, userID: user.id})
         } else {
-          console.error('Sorry, it looks like those were the wrong credentials!')
+          commit(types.SET_NOTIFICATION, {msg: 'Sorry, it looks like those were the wrong credentials!', type: 'danger'})
         }
       })
-      .catch((e) => { console.Error(e) })
+      .catch((e) => commit(types.SET_NOTIFICATION, {msg: e, type: 'danger'}))
   },
   createUser ({commit, state}) {
     authAPI.signUpUser(state.userName, state.email, state.password)
@@ -36,10 +36,14 @@ const actions = {
           const user = { ...data.User }
           commit(types.AUTH_SUCCESS, { userName: user.name, userEmail: user.email })
         } else {
-          console.Error('Sorry, it looks like those were the wrong credentials!')
+          commit(
+            types.SET_NOTIFICATION,
+            {
+              msg: 'Sorry, it looks like those were the wrong credentials!',
+              type: 'danger'
+            })
         }
-      })
-      .catch((e) => { console.Error(e) })
+      }).catch((e) => { commit(types.SET_NOTIFICATION, {msg: e, type: 'danger'}) })
   }
 }
 
