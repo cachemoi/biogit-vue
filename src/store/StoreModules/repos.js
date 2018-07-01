@@ -44,7 +44,7 @@ const actions = {
           commit(types.SET_REPOS, {repos: data.User.repositories})
         })
     } catch (e) {
-      console.log(new Error(e))
+      console.Error(e)
     }
   },
   createRepo ({state, commit}, {userID, newRepoName}) {

@@ -24,10 +24,10 @@ const actions = {
           const user = {...data.User}
           commit(types.AUTH_SUCCESS, {userName: user.name, userID: user.id})
         } else {
-          console.log(new Error('Sorry, it looks like those were the wrong credentials!'))
+          console.error('Sorry, it looks like those were the wrong credentials!')
         }
       })
-      .catch((e) => { console.log(new Error(e)) })
+      .catch((e) => { console.Error(e) })
   },
   createUser ({commit, state}) {
     authAPI.signUpUser(state.userName, state.email, state.password)
@@ -36,10 +36,10 @@ const actions = {
           const user = { ...data.User }
           commit(types.AUTH_SUCCESS, { userName: user.name, userEmail: user.email })
         } else {
-          console.log(new Error('Sorry, it looks like those were the wrong credentials!'))
+          console.Error('Sorry, it looks like those were the wrong credentials!')
         }
       })
-      .catch((e) => { return new Error(e.toString()) })
+      .catch((e) => { console.Error(e) })
   }
 }
 

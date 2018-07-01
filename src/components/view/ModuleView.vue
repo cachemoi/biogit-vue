@@ -46,7 +46,6 @@
     },
     methods: {
       setFocusedModule (id) {
-        console.log(id)
         this.$store.commit('FOCUS_MODULE', {moduleID: id})
       }
     }

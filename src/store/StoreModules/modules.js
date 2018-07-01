@@ -91,7 +91,6 @@ const actions = {
   createModule ({state, commit}, {repoID, moduleType, moduleName}) {
     return modulesAPI.createModule({repoID: repoID, moduleType: moduleType, moduleName: moduleName})
     .then(data => {
-      console.log(data)
       commit('ADD_MODULE', {
         module: data,
         type: state.newModule.type
@@ -109,8 +108,6 @@ const mutations = {
   },
   [types.ADD_MODULE] (state, { module, type }) {
     if (type === 'Experiment') {
-      console.log('Experiment added')
-      console.log(module.id)
       Vue.set(state.experiments, module.id, module)
     } else if (type === 'Protocol') {
       Vue.set(state.protocols, module.id, module)
