@@ -17,35 +17,29 @@ const getters = {}
 
 // actions
 const actions = {
-  async auth ({commit, state}) {
-    try {
-      await authAPI.authUser(state.user.email)
-        .then(data => {
-          if (data.User) {
-            const user = {...data.User}
-            commit(types.AUTH_SUCCESS, {userName: user.name, userID: user.id})
-          } else {
-            console.log(new Error('Sorry, it looks like those were the wrong credentials!'))
-          }
-        })
-    } catch (e) {
-      console.log(new Error(e))
-    }
+  auth ({commit, state}) {
+    authAPI.authUser(state.user.email)
+      .then(data => {
+        if (data.User) {
+          const user = {...data.User}
+          commit(types.AUTH_SUCCESS, {userName: user.name, userID: user.id})
+        } else {
+          console.log(new Error('Sorry, it looks like those were the wrong credentials!'))
+        }
+      })
+      .catch((e) => { console.log(new Error(e)) })
   },
-  async createUser ({commit, state}) {
-    try {
-      authAPI.signUpUser(state.userName, state.email, state.password)
-        .then(data => {
-          if (data.User) {
-            const user = { ...data.User }
-            commit(types.AUTH_SUCCESS, { userName: user.name, userEmail: user.email })
-          } else {
-            console.log(new Error('Sorry, it looks like those were the wrong credentials!'))
-          }
-        })
-    } catch (e) {
-      return new Error(e.toString())
-    }
+  createUser ({commit, state}) {
+    authAPI.signUpUser(state.userName, state.email, state.password)
+      .then(data => {
+        if (data.User) {
+          const user = { ...data.User }
+          commit(types.AUTH_SUCCESS, { userName: user.name, userEmail: user.email })
+        } else {
+          console.log(new Error('Sorry, it looks like those were the wrong credentials!'))
+        }
+      })
+      .catch((e) => { return new Error(e.toString()) })
   }
 }
 

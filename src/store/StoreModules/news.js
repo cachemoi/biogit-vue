@@ -18,9 +18,10 @@ const actions = {
   getUserNews ({state, commit}, {userID, itemNum}) {
     newsAPI.getWorldNews({userID: userID, itemNum: itemNum}).then(data => console.log(data))
   },
-  async getNews ({state, commit, dispatch}, {userID, itemNum}) {
-    await dispatch('getUserNews', {userID: userID, itemNum: itemNum}).then(data => console.log(data))
-    await dispatch('getWorldNews', {itemNum: itemNum}).then(data => console.log(data))
+  getNews ({state, commit, dispatch}, {userID, itemNum}) {
+    dispatch('getUserNews', {userID: userID, itemNum: itemNum}).then(data => console.log(data))
+    .then(() => dispatch('getWorldNews', {itemNum: itemNum})
+    .then(data => console.log(data)))
   }
 }
 

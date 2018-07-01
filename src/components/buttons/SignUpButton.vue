@@ -37,9 +37,8 @@
       })
     },
     methods: {
-      async signUp () {
-        await this.$store.dispatch('signUp')
-        this.$router.push({path: '/'})
+      signUp () {
+        this.$store.dispatch('signUp').then(() => this.$router.push({path: '/'}))
       },
       updateMail (e) {
         this.$store.commit('SET_EMAIL', e.target.value)

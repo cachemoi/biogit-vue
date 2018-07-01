@@ -64,8 +64,8 @@ const getters = {
 
 // actions
 const actions = {
-  async getRepoModules ({state, commit}, repoID) {
-    await modulesAPI.getRepoModulesID(repoID)
+  getRepoModules ({state, commit}, repoID) {
+    modulesAPI.getRepoModulesID(repoID)
     .then(data => {
       let extractedModules = {
         experiments: [],
@@ -105,11 +105,9 @@ const actions = {
 // mutations
 const mutations = {
   [types.FOCUS_MODULE] (state, {moduleID}) {
-    console.log(moduleID)
     state.focusedModuleID = moduleID
   },
   [types.ADD_MODULE] (state, { module, type }) {
-    console.log('module added', module, type)
     if (type === 'Experiment') {
       console.log('Experiment added')
       console.log(module.id)
