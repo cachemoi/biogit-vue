@@ -98,11 +98,21 @@ const actions = {
       commit('FOCUS_MODULE', { moduleID: data.id })
       return data.id
     })
+  },
+  getProtocolSteps ({state}, {protocolID}) {
+    return modulesAPI.getProtocolSteps({protocolID: protocolID})
+    .then(data => { console.log(data) })
+  },
+  addProtocolSteps ({state}, {protocolID, protocolSteps}) {
+    return modulesAPI.addProtocolSteps({protocolID: protocolID, protocolSteps: protocolSteps})
+    .then(data => { console.log(data) })
   }
 }
 
 // mutations
 const mutations = {
+  // todo: add mutations for addprotocol
+  // (state, payload){}
   [types.FOCUS_MODULE] (state, {moduleID}) {
     state.focusedModuleID = moduleID
   },

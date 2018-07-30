@@ -84,21 +84,22 @@ function createModule ({repoID, moduleName, moduleType}) {
   }
 }
 
-function getProtocol ({protocolID}) {
-  const getProtocol = `
-    query getProtocol ($id: ID!) {
+function getProtocolSteps ({protocolID}) {
+  const getProtocolSteps = `
+    query getProtocolSteps ($id: ID!) {
       Protocol (id: $id) {
         steps
       }
     }
   `
-  return client.request(getProtocol, {id: protocolID})
+  return client.request(getProtocolSteps, {id: protocolID})
 }
 
-function createProtocol ({repoID, moduleName, protocolSteps}) {
-  const createProtocol = `
-    mutation createProtocol ($name: String!, $steps: [String!], $id: ID!) {
-      createProtocol (
+function addProtocolSteps ({protocolID, protocolSteps}) {
+  // If you're adding steps to the protocol, then the protocol already exists
+  const addProtocolSteps = `
+    mutation addProtocolSteps ($steps: [String!], $id: ID!) {
+      addProtocolSteps (
         name: $name
         steps: $steps
         linkedRepositoryId: $id
@@ -108,13 +109,13 @@ function createProtocol ({repoID, moduleName, protocolSteps}) {
       }
     }
   `
-  return client.request(createProtocol, { id: repoID, name: moduleName, steps: protocolSteps }).then(data => { return data.createProtocol })
+  return client.request(addProtocolSteps, { id: protocolID, steps: protocolSteps }).then(data => { return data.addProtocolSteps })
 }
 const api = {
   getRepoModulesID: getRepoModulesID,
   createModule: createModule,
-  getProtocol: getProtocol,
-  createProtocol: createProtocol
+  getProtocolSteps: getProtocolSteps,
+  addProtocolSteps: addProtocolSteps
 }
 
 export default api
