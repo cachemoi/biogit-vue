@@ -84,9 +84,37 @@ function createModule ({repoID, moduleName, moduleType}) {
   }
 }
 
+function getProtocol ({protocolID}) {
+  const getProtocol = `
+    query getProtocol ($id: ID!) {
+      Protocol (id: $id) {
+        steps
+      }
+    }
+  `
+  return client.request(getProtocol, {id: protocolID})
+}
+
+function createProtocol ({repoID, moduleName, protocolSteps}) {
+  const createProtocol = `
+    mutation createProtocol ($name: String!, $steps: [String!], $id: ID!) {
+      createProtocol (
+        name: $name
+        steps: $steps
+        linkedRepositoryId: $id
+      ) {
+        id
+        name
+      }
+    }
+  `
+  return client.request(createProtocol, { id: repoID, name: moduleName, steps: protocolSteps }).then(data => { return data.createProtocol })
+}
 const api = {
   getRepoModulesID: getRepoModulesID,
-  createModule: createModule
+  createModule: createModule,
+  getProtocol: getProtocol,
+  createProtocol: createProtocol
 }
 
 export default api
