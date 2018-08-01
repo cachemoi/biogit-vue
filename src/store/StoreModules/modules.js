@@ -99,9 +99,17 @@ const actions = {
       return data.id
     })
   },
-  getProtocolSteps ({state}, {protocolID}) {
+  getProtocolSteps ({state, commit}, {protocolID}) {
     return modulesAPI.getProtocolSteps({protocolID: protocolID})
-    .then(data => { console.log(data) })
+    .then(data => {
+      // console.log('data', data.Protocol)
+      // console.log('pastData', state.protocols[data.Protocol.id])
+      commit('SET_PROTOCOL_STEP', {
+        module: data.Protocol,
+        pastData: state.protocols[data.Protocol.id]
+      })
+      return data.Protocol.steps
+    })
   },
   addProtocolSteps ({state}, {protocolID, protocolSteps}) {
     return modulesAPI.addProtocolSteps({protocolID: protocolID, protocolSteps: protocolSteps})
@@ -125,6 +133,7 @@ const mutations = {
       Vue.set(state.systems, module.id, module)
     }
   },
+  // Doesn't seem like this function is being used
   [types.ADD_MODULES] (state, {experiments, protocols, systems}) {
     for (let experiment of experiments) {
       Vue.set(state.experiments, experiment.id, {...experiment})
@@ -160,7 +169,17 @@ const mutations = {
   },
   [types.SET_NEW_MODULE_TYPE] (state, { moduleType }) {
     state.newModule.type = moduleType
+  },
+  [types.SET_PROTOCOL_STEP] (state, { module, pastData }) {
+    Vue.set(state.protocols, module.id, {steps: module.steps, ...pastData})
+    // console.log('module.id', module.id)
+    // console.log('new obj', {steps: module.steps, ...pastData})
   }
+
+  // [types.ADD_PROTOCOL_STEP] (state, ) {
+
+  // }
+
 }
 
 export default {

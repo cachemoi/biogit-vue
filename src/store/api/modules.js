@@ -88,15 +88,18 @@ function getProtocolSteps ({protocolID}) {
   const getProtocolSteps = `
     query getProtocolSteps ($id: ID!) {
       Protocol (id: $id) {
+        id
         steps
       }
     }
   `
+  console.log(protocolID)
   return client.request(getProtocolSteps, {id: protocolID})
 }
 
 function addProtocolSteps ({protocolID, protocolSteps}) {
   // If you're adding steps to the protocol, then the protocol already exists
+  // Need to change this
   const addProtocolSteps = `
     mutation addProtocolSteps ($steps: [String!], $id: ID!) {
       addProtocolSteps (

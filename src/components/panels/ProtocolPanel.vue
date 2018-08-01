@@ -1,7 +1,8 @@
 <template>
   <div>
     <h2>{{focusedModuleDat.name}}</h2>
-    <ul>
+    <p>{{focusedModuleDat}}</p>
+    <!-- <ul> -->
 <!--       <add-step 
       v-for="i in stepCounter"
       :stepNumber="i"
@@ -27,7 +28,7 @@
        class="btn btn-primary"
        @click="saveContent"
       >Submit Protocol</button>
-    </template>
+    <!-- </template> -->
   </div>
 </template>
 
@@ -50,19 +51,20 @@
         editor: null
       }
     },
+    created () {
+      this.$store.dispatch('getProtocolSteps', {protocolID: this.focusedModuleDat.id})
+      console.log('before mount', this.$store.state.protocols)
+    },
     mounted () {
       this.setQuillElement()
     },
     methods: {
-      saveContent() {
-        
-      },
       setQuillElement () {
-        // deal with config later, 
+        // deal with config later,
         let toolbarOptions = [
           ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
           [{ 'list': 'bullet' }],
-          [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+          [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
           [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
           [ 'link', 'image', 'formula' ],          // add's image support
           [{ 'color': [] }],          // dropdown with defaults from theme
@@ -70,7 +72,7 @@
           [{ 'align': [] }],
 
           ['clean']                                       // remove formatting button
-        ];
+        ]
         let options = {
           debug: true,
           placeholder: '',
@@ -80,9 +82,21 @@
           }
         }
         this.quill = new Quill(this.$refs.quillContainer, options)
+      },
+      saveContent () {
+        let content = this.quill.getContents()
+        console.log('contents', content)
+        let html = 'contents' + JSON.stringify(content, null, 2)
+        console.log(html)
+      },
+      addProtocolSteps () {
+        this.$store.dispatch('addProtocolSteps', {
+          protocolID: null,
+          protocolSteps: null
+        })
+      }
     }
   }
-}
 </script>
 
 <style scoped>
