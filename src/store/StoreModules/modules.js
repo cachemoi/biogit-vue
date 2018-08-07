@@ -105,15 +105,19 @@ const actions = {
       // console.log('data', data.Protocol)
       // console.log('pastData', state.protocols[data.Protocol.id])
       commit('SET_PROTOCOL_STEP', {
-        module: data.Protocol,
-        pastData: state.protocols[data.Protocol.id]
+        module: data,
+        pastData: state.protocols[data.id]
       })
-      return data.Protocol.steps
     })
   },
-  addProtocolSteps ({state}, {protocolID, protocolSteps}) {
+  addProtocolSteps ({state, commit}, {protocolID, protocolSteps}) {
     return modulesAPI.addProtocolSteps({protocolID: protocolID, protocolSteps: protocolSteps})
-    .then(data => { console.log(data) })
+    .then(data => {
+      commit('ADD_PROTOCOL_STEP', {
+        module: data,
+        pastData: state.protocols[data.id]
+      })
+    })
   }
 }
 
@@ -174,11 +178,10 @@ const mutations = {
     Vue.set(state.protocols, module.id, {steps: module.steps, ...pastData})
     // console.log('module.id', module.id)
     // console.log('new obj', {steps: module.steps, ...pastData})
+  },
+  [types.ADD_PROTOCOL_STEP] (state, {module, pastData}) {
+    Vue.set(state.protocols, module.id, {steps: module.steps, ...pastData})
   }
-
-  // [types.ADD_PROTOCOL_STEP] (state, ) {
-
-  // }
 
 }
 

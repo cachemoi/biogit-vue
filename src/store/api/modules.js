@@ -6,7 +6,7 @@ const client = new GraphQLClient('https://api.graph.cool/simple/v1/cjgjfc3us6w7i
     Authorization: 'Bearer YOUR_AUTH_TOKEN'
   }
 })
-
+// graphcool login --token "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzA0OTU2OTcsImNsaWVudElkIjoiY2pqM2xsbHJnMXIyYTAxNjZyZmNwdDQwZSJ9.3oPiSFcfkLjT799G6bGXre_F2edR0tbgAnjsa6dxWqc"
 // getRepoModulesID will return the IDs of a repo's knowledge modules
 function getRepoModulesID (repoID) {
   const queryRepoModulesID = `
@@ -94,25 +94,26 @@ function getProtocolSteps ({protocolID}) {
     }
   `
   console.log(protocolID)
-  return client.request(getProtocolSteps, {id: protocolID})
+  return client.request(getProtocolSteps, {id: protocolID}).then(data => {
+    return data.Protocol
+  })
 }
 
 function addProtocolSteps ({protocolID, protocolSteps}) {
   // If you're adding steps to the protocol, then the protocol already exists
   // Need to change this
   const addProtocolSteps = `
-    mutation addProtocolSteps ($steps: [String!], $id: ID!) {
-      addProtocolSteps (
-        name: $name
+    mutation updateProtocol ($id: ID!, $steps: String) {
+      updateProtocol (
+        id: $id
         steps: $steps
-        linkedRepositoryId: $id
       ) {
         id
-        name
+        steps
       }
     }
   `
-  return client.request(addProtocolSteps, { id: protocolID, steps: protocolSteps }).then(data => { return data.addProtocolSteps })
+  return client.request(addProtocolSteps, { id: protocolID, steps: protocolSteps }).then(data => { return data.updateProtocol })
 }
 const api = {
   getRepoModulesID: getRepoModulesID,

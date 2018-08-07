@@ -1,7 +1,9 @@
 <template>
   <div>
     <h2>{{focusedModuleDat.name}}</h2>
-    <p>{{focusedModuleDat}}</p>
+    <!--     light bunser burner
+    place iron oxide
+    observe -->
     <!-- <ul> -->
 <!--       <add-step 
       v-for="i in stepCounter"
@@ -53,7 +55,6 @@
     },
     created () {
       this.$store.dispatch('getProtocolSteps', {protocolID: this.focusedModuleDat.id})
-      console.log('before mount', this.$store.state.protocols)
     },
     mounted () {
       this.setQuillElement()
@@ -82,12 +83,16 @@
           }
         }
         this.quill = new Quill(this.$refs.quillContainer, options)
+        if (this.focusedModuleDat.steps) this.quill.setContents(JSON.parse(this.focusedModuleDat.steps))
       },
       saveContent () {
         let content = this.quill.getContents()
-        console.log('contents', content)
-        let html = 'contents' + JSON.stringify(content, null, 2)
-        console.log(html)
+        let protocolSteps = JSON.stringify(content, null, 2)
+        console.log(protocolSteps)
+        this.$store.dispatch('addProtocolSteps', {
+          protocolID: this.focusedModuleDat.id,
+          protocolSteps: protocolSteps
+        })
       },
       addProtocolSteps () {
         this.$store.dispatch('addProtocolSteps', {

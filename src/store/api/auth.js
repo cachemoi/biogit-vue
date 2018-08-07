@@ -1,5 +1,4 @@
 import { GraphQLClient } from 'graphql-request'
-// import gql from 'graphql-tag'
 
 const client = new GraphQLClient('https://api.graph.cool/simple/v1/cjgjfc3us6w7i0174gjbfa3yh', {
   headers: {
