@@ -108,6 +108,7 @@ const actions = {
         module: data,
         pastData: state.protocols[data.id]
       })
+      return data.steps
     })
   },
   addProtocolSteps ({state, commit}, {protocolID, protocolSteps}) {

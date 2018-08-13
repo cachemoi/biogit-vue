@@ -1,6 +1,8 @@
 <template>
   <div>
     <h2>{{focusedModuleDat.name}}</h2>
+    <!-- <div>{{ focusedModuleDat.steps? setQuillContents(): null }}</div> -->
+    <!-- <p v-if='focusedModuleDat.steps'>{{ setQuillContents() }}</p> -->
     <!--     light bunser burner
     place iron oxide
     observe -->
@@ -43,6 +45,9 @@
     name: 'ProtocolPanel',
     props: {},
     computed: {
+      // ...mapstate({
+      //   protocolSteps: state => state.
+      // }),
       ...mapGetters([
         'focusedModuleDat'
       ])
@@ -53,15 +58,13 @@
         editor: null
       }
     },
-    created () {
-      this.$store.dispatch('getProtocolSteps', {protocolID: this.focusedModuleDat.id})
-    },
     mounted () {
       this.setQuillElement()
+      this.$store.dispatch('getProtocolSteps', {protocolID: this.focusedModuleDat.id})
+      .then(steps => this.quill.setContents(JSON.parse(steps)))
     },
     methods: {
       setQuillElement () {
-        // deal with config later,
         let toolbarOptions = [
           ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
           [{ 'list': 'bullet' }],
@@ -83,22 +86,24 @@
           }
         }
         this.quill = new Quill(this.$refs.quillContainer, options)
-        if (this.focusedModuleDat.steps) this.quill.setContents(JSON.parse(this.focusedModuleDat.steps))
+        // if (this.focusedModuleDat.steps) {
+        //   console.log('true')
+        //   this.quill.setContents(JSON.parse(this.focusedModuleDat.steps))
+        // } else {
+        //   console.log('false')
+        // }
       },
       saveContent () {
-        let content = this.quill.getContents()
-        let protocolSteps = JSON.stringify(content, null, 2)
-        console.log(protocolSteps)
+        let protocolSteps = JSON.stringify(this.quill.getContents(), null, 2)
         this.$store.dispatch('addProtocolSteps', {
           protocolID: this.focusedModuleDat.id,
           protocolSteps: protocolSteps
         })
       },
-      addProtocolSteps () {
-        this.$store.dispatch('addProtocolSteps', {
-          protocolID: null,
-          protocolSteps: null
-        })
+      setQuillContents () {
+        this.quill.setContents(JSON.parse(this.focusedModuleDat.steps))
+        // this.quill.setText(JSON.parse(this.focusedModuleDat.steps))
+        // this.quill.insertText(0, JSON.parse(this.focusedModuleDat.steps))
       }
     }
   }
