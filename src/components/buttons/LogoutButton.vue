@@ -9,6 +9,7 @@
     name: 'LogoutButton',
     methods: {
       logout () {
+        this.$router.push({path: '/'})
         this.$store.commit('LOGOUT')
       }
     }
