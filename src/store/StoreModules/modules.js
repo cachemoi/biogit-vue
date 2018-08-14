@@ -124,8 +124,6 @@ const actions = {
 
 // mutations
 const mutations = {
-  // todo: add mutations for addprotocol
-  // (state, payload){}
   [types.FOCUS_MODULE] (state, {moduleID}) {
     state.focusedModuleID = moduleID
   },
@@ -177,8 +175,6 @@ const mutations = {
   },
   [types.SET_PROTOCOL_STEP] (state, { module, pastData }) {
     Vue.set(state.protocols, module.id, {steps: module.steps, ...pastData})
-    // console.log('module.id', module.id)
-    // console.log('new obj', {steps: module.steps, ...pastData})
   },
   [types.ADD_PROTOCOL_STEP] (state, {module, pastData}) {
     Vue.set(state.protocols, module.id, {steps: module.steps, ...pastData})

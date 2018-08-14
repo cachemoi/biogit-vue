@@ -6,7 +6,6 @@ const client = new GraphQLClient('https://api.graph.cool/simple/v1/cjgjfc3us6w7i
     Authorization: 'Bearer YOUR_AUTH_TOKEN'
   }
 })
-// graphcool login --token "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzA0OTU2OTcsImNsaWVudElkIjoiY2pqM2xsbHJnMXIyYTAxNjZyZmNwdDQwZSJ9.3oPiSFcfkLjT799G6bGXre_F2edR0tbgAnjsa6dxWqc"
 // getRepoModulesID will return the IDs of a repo's knowledge modules
 function getRepoModulesID (repoID) {
   const queryRepoModulesID = `
